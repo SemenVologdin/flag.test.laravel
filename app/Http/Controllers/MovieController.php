@@ -15,7 +15,6 @@ class MovieController extends Controller
     {
         $movies = Movie::query()->paginate(self::PER_PAGE);
         $collection = MovieResource::collection($movies);
-
         return response()->json([
             'data' => $collection,
             'currentPage' => $movies->currentPage(),

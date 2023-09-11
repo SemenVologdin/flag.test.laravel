@@ -19,6 +19,7 @@ class ActorResource extends JsonResource
             'name' => $this->name,
             'surname' => $this->surname,
             'age' => $this->age,
+            'movies' => $this->movies ?: [],
 //            'genre_id' => $this->genreId,
         ];
     }

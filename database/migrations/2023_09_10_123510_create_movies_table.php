@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('title')->nullable(false);
-            $table->integer('genre_id')->nullable(false);
+            $table->integer('genre_id')->nullable();
         });
     }
 
