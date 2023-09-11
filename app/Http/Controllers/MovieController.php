@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\MovieDTO;
 use App\Http\Requests\MovieRequest;
 use App\Http\Resources\MovieResource;
 use App\Models\Movie;
@@ -13,7 +14,18 @@ class MovieController extends Controller
 
     public function index(): JsonResponse
     {
-        $movies = Movie::query()->paginate(self::PER_PAGE);
+        $titleOrder = in_array(strtoupper(request()->title_order), ['ASC', 'DESC'])
+            ? request()->title_order
+            : ''
+        ;
+        $movieDTO = (new MovieDTO())
+            ->setActorId((int)request()->actor_id)
+            ->setGenreId((int)request()->genre_id)
+            ->setPage((int)request()->page)
+            ->setTitle((string)request()->title)
+            ->setTitleOrder($titleOrder)
+        ;
+        $movies = Movie::getListData($movieDTO);
         $collection = MovieResource::collection($movies);
         return response()->json([
             'data' => $collection,
